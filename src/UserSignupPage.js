@@ -32,30 +32,50 @@ class UserSignUpPage extends React.Component {
 
   render() {
     return (
-      <form>
-        <h1>Sign Up</h1>
-        <div>
-          <label>Username</label>
-          <input name="userName" onChange={this.onChange} />
-        </div>
-        <div>
-          <label>Display Name</label>
-          <input name="displayName" onChange={this.onChange} />
-        </div>
-        <div>
-          <label>Password</label>
-          <input name="password" type="password" onChange={this.onChange} />
-        </div>
-        <div>
-          <label>Password Repeat</label>
-          <input
-            name="passwordRepeat"
-            type="password"
-            onChange={this.onChange}
-          />
-        </div>
-        <button onClick={this.onClickSignUp}>Sign Up</button>
-      </form>
+      <div className="container">
+        <form>
+          <h1 className="text-center">Sign Up</h1>
+          <div className="mb-3">
+            <label>Username</label>
+            <input
+              className="form-control"
+              name="userName"
+              onChange={this.onChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Display Name</label>
+            <input
+              className="form-control"
+              name="displayName"
+              onChange={this.onChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Password</label>
+            <input
+              className="form-control"
+              name="password"
+              type="password"
+              onChange={this.onChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Password Repeat</label>
+            <input
+              className="form-control"
+              name="passwordRepeat"
+              type="password"
+              onChange={this.onChange}
+            />
+          </div>
+          <div className="text-center">
+            <button className="btn btn-primary" onClick={this.onClickSignUp}>
+              Sign Up
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }
