@@ -17,10 +17,26 @@ class UserSignUpPage extends React.Component {
 
     const errors = { ...this.state.errors };
     errors[name] = undefined;
+
+    if (name === "password" || "passwordRepeat") {
+      errors.passwordRepeat = this.checkPasswordsMatch(name, value);
+    }
+
     this.setState({
       [name]: value,
       errors,
     });
+  };
+
+  checkPasswordsMatch = (name, value) => {
+    const { password, passwordRepeat } = this.state;
+    if (
+      (name === "password" && value !== passwordRepeat) ||
+      (name === "passwordRepeat" && value !== password)
+    ) {
+      return "Passwords do not match with each other.";
+    }
+    return undefined;
   };
 
   onClickSignUp = async (event) => {
@@ -48,13 +64,13 @@ class UserSignUpPage extends React.Component {
 
   render() {
     const { pendingApiCall, errors } = this.state;
-    const { userName, displayName, password } = errors;
+    const { userName, displayName, password, passwordRepeat } = errors;
     return (
       <div className="container">
         <form>
           <h1 className="text-center">Sign Up</h1>
           <Input
-            label="Username"
+            label="User Name"
             name="userName"
             error={userName}
             onChange={this.onChange}
@@ -72,21 +88,18 @@ class UserSignUpPage extends React.Component {
             onChange={this.onChange}
             type="password"
           ></Input>
-
-          <div className="mb-3">
-            <label>Password Repeat</label>
-            <input
-              className="form-control"
-              name="passwordRepeat"
-              type="password"
-              onChange={this.onChange}
-            />
-          </div>
+          <Input
+            label="Password Repeat"
+            name="passwordRepeat"
+            error={passwordRepeat}
+            onChange={this.onChange}
+            type="password"
+          ></Input>
           <div className="text-center">
             <button
               className="btn btn-primary"
               onClick={this.onClickSignUp}
-              disabled={pendingApiCall}
+              disabled={pendingApiCall || passwordRepeat}
             >
               {pendingApiCall && (
                 <span className="spinner-border spinner-border-sm"></span>
