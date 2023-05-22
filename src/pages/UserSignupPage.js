@@ -1,5 +1,5 @@
 import React from "react";
-import { signUp, changeLanguage } from "../api/apiCalls";
+import { signUp } from "../api/apiCalls";
 import Input from "../components/Input";
 import { withTranslation } from "react-i18next";
 
@@ -19,7 +19,7 @@ class UserSignUpPage extends React.Component {
     const errors = { ...this.state.errors };
     errors[name] = undefined;
 
-    if (name === "password" || "passwordRepeat") {
+    if (name === "password" || name === "passwordRepeat") {
       errors.passwordRepeat = this.checkPasswordsMatch(name, value);
     }
 
@@ -67,12 +67,6 @@ class UserSignUpPage extends React.Component {
     this.setState({ pendingApiCall: false });
   };
 
-  onClickLanguage = (language) => {
-    const { i18n } = this.props;
-    i18n.changeLanguage(language);
-    changeLanguage(language);
-  };
-
   render() {
     const { pendingApiCall, errors } = this.state;
     const { userName, displayName, password, passwordRepeat } = errors;
@@ -118,24 +112,6 @@ class UserSignUpPage extends React.Component {
               )}
               {t("Sign Up")}
             </button>
-          </div>
-          <div>
-            <img
-              src="https://flagcdn.com/16x12/tr.png"
-              width="24"
-              height="18"
-              alt="Turkish Flag"
-              onClick={() => this.onClickLanguage("tr")}
-              style={{ cursor: "pointer" }}
-            ></img>
-            <img
-              src="https://flagcdn.com/16x12/gb.png"
-              width="24"
-              height="18"
-              alt="Great Britain Flag"
-              onClick={() => this.onClickLanguage("en")}
-              style={{ cursor: "pointer", marginLeft: 10 }}
-            ></img>
           </div>
         </form>
       </div>

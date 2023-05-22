@@ -7,3 +7,7 @@ export const signUp = (body) => {
 export const changeLanguage = (language) => {
   axios.defaults.headers["accept-language"] = language;
 };
+
+export const login = (creds) => {
+  return axios.post("/auth", {}, { auth: creds });
+};
