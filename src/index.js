@@ -8,12 +8,15 @@ import reportWebVitals from "./reportWebVitals";
 import "./bootstrap-override.scss";
 import "./i18n";
 import LanguageSelector from "./components/LanguageSelector";
+import ApiProgress from "./shared/ApiProgress";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <div>
-      <UserSignUpPage />
+      <ApiProgress>
+        <UserSignUpPage />
+      </ApiProgress>
       <LanguageSelector></LanguageSelector>
     </div>
   </React.StrictMode>
