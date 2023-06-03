@@ -8,14 +8,10 @@ function App() {
   return (
     <div className="row">
       <div className="col">
-        <ApiProgress path="/users/save">
-          <UserSignupPage />
-        </ApiProgress>
+        <UserSignupPage />
       </div>
       <div className="col">
-        <ApiProgress path="/auth">
-          <LoginPage />
-        </ApiProgress>
+        <LoginPage />
       </div>
       <LanguageSelector></LanguageSelector>
     </div>
