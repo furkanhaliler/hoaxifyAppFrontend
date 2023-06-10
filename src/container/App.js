@@ -6,16 +6,18 @@ import LanguageSelector from "../components/LanguageSelector";
 import HomePage from "../pages/HomePage";
 import UserPage from "../pages/UserPage";
 import {
-  HashRouter,
+  HashRouter as Router,
   Route,
   Redirect,
   Switch,
 } from "react-router-dom/cjs/react-router-dom.min";
+import TopBar from "../components/TopBar";
 
 function App() {
   return (
     <div>
-      <HashRouter>
+      <Router>
+        <TopBar></TopBar>
         <Switch>
           <Route exact path="/" component={HomePage}></Route>
           <Route path="/login" component={LoginPage}></Route>
@@ -23,7 +25,7 @@ function App() {
           <Route path="/user/:username" component={UserPage}></Route>
           <Redirect to="/"></Redirect>
         </Switch>
-      </HashRouter>
+      </Router>
       <LanguageSelector></LanguageSelector>
     </div>
   );

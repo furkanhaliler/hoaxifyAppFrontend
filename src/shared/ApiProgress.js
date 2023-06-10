@@ -14,12 +14,12 @@ export function withApiProgress(WrappedComponent, apiPath) {
     state = { pendingApiCall: false };
 
     componentDidMount() {
-      axios.interceptors.request.use((request) => {
+      this.requestInterceptor = axios.interceptors.request.use((request) => {
         this.updateApicallFor(request.url, true);
         return request;
       });
 
-      axios.interceptors.response.use(
+      this.requestInterceptor = axios.interceptors.response.use(
         (response) => {
           this.updateApicallFor(response.config.url, false);
           return response;
@@ -29,6 +29,11 @@ export function withApiProgress(WrappedComponent, apiPath) {
           throw error;
         }
       );
+    }
+
+    componentWillUnmount() {
+      axios.interceptors.request.eject(this.requestInterceptor);
+      axios.interceptors.response.eject(this.requestInterceptor);
     }
 
     updateApicallFor = (url, inProgress) => {
