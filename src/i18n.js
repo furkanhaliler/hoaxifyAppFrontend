@@ -13,6 +13,9 @@ i18n.use(initReactI18next).init({
         Password: "Password",
         "Password Repeat": "Password Repeat",
         Login: "Login",
+        Logout: "Logout",
+        HomePageLoggedOutMessage:
+          "Welcome to Hoaxify. Please login to your account. If you do not have an account, you can sign up.",
       },
     },
     tr: {
@@ -25,6 +28,9 @@ i18n.use(initReactI18next).init({
         Password: "Şifre",
         "Password Repeat": "Şifreyi Tekrarla",
         Login: "Giriş Yap",
+        Logout: "Çıkış Yap",
+        HomePageLoggedOutMessage:
+          "Hoaxify'a hoş geldin. Lütfen giriş yap. Eğer bir hesabın yoksa, kayıt olabilirsin.",
       },
     },
   },

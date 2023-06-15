@@ -3,7 +3,8 @@ import ApiProgress from "../shared/ApiProgress";
 import UserSignupPage from "../pages/UserSignupPage";
 import LoginPage from "../pages/LoginPage";
 import LanguageSelector from "../components/LanguageSelector";
-import HomePage from "../pages/HomePage";
+import HomePageLoggedIn from "../pages/HomePageLoggedIn";
+import HomePageLoggedOut from "../pages/HomePageLoggedOut";
 import UserPage from "../pages/UserPage";
 import {
   HashRouter as Router,
@@ -13,22 +14,70 @@ import {
 } from "react-router-dom/cjs/react-router-dom.min";
 import TopBar from "../components/TopBar";
 
-function App() {
-  return (
-    <div>
-      <Router>
-        <TopBar></TopBar>
-        <Switch>
-          <Route exact path="/" component={HomePage}></Route>
-          <Route path="/login" component={LoginPage}></Route>
-          <Route path="/signup" component={UserSignupPage}></Route>
-          <Route path="/user/:username" component={UserPage}></Route>
-          <Redirect to="/"></Redirect>
-        </Switch>
-      </Router>
-      <LanguageSelector></LanguageSelector>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    isLoggedIn: false,
+    username: undefined,
+  };
+
+  onLoginSuccess = (username) => {
+    this.setState({
+      username: username,
+      isLoggedIn: true,
+    });
+  };
+
+  onLogoutSuccess = () => {
+    this.setState({
+      isLoggedIn: false,
+      username: undefined,
+    });
+  };
+
+  render() {
+    const { isLoggedIn, username } = this.state;
+
+    return (
+      <div>
+        <Router>
+          <TopBar
+            isLoggedIn={isLoggedIn}
+            username={username}
+            onLogoutSuccess={this.onLogoutSuccess}
+          ></TopBar>
+          <Switch>
+            {!isLoggedIn && (
+              <Route exact path="/" component={HomePageLoggedOut}></Route>
+            )}
+            {isLoggedIn && (
+              <Route exact path="/home" component={HomePageLoggedIn}></Route>
+            )}
+            {!isLoggedIn && (
+              <Route
+                path="/login"
+                component={(props) => {
+                  return (
+                    <LoginPage
+                      {...props}
+                      onLoginSuccess={this.onLoginSuccess}
+                    ></LoginPage>
+                  );
+                }}
+              ></Route>
+            )}
+            {!isLoggedIn && (
+              <Route path="/signup" component={UserSignupPage}></Route>
+            )}
+            {isLoggedIn && (
+              <Route path="/user/:username" component={UserPage}></Route>
+            )}
+            <Redirect to={isLoggedIn ? "/home" : "/"}></Redirect>
+          </Switch>
+        </Router>
+        <LanguageSelector></LanguageSelector>
+      </div>
+    );
+  }
 }
 
 export default App;

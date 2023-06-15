@@ -5,26 +5,45 @@ import { withTranslation } from "react-i18next";
 
 class TopBar extends Component {
   render() {
-    const { t } = this.props;
+    const { t, isLoggedIn, username, onLogoutSuccess } = this.props;
+    let links = (
+      <ul className="navbar-nav">
+        <li>
+          <Link className="nav-link" to="/login">
+            {t("Login")}
+          </Link>
+        </li>
+        <li>
+          <Link className="nav-link" to="/signUp">
+            {t("Sign Up")}
+          </Link>
+        </li>
+      </ul>
+    );
+    if (isLoggedIn) {
+      links = (
+        <ul className="navbar-nav">
+          <li>
+            <Link className="nav-link" to={`/user/${username}`}>
+              {username}
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link" to="/" onClick={onLogoutSuccess}>
+              {t("Logout")}
+            </Link>
+          </li>
+        </ul>
+      );
+    }
     return (
       <div className="shadow-sm bg-light mb-3">
         <nav className="navbar bg-body-tertiary container navbar-expand">
           <div className="container-fluid">
-            <Link className="navbar-brand" to="/">
+            <Link className="navbar-brand" to={isLoggedIn ? "/home" : "/"}>
               <img src={logo} width="60" alt="Hoaxify Logo"></img>Hoaxify
             </Link>
-            <ul className="navbar-nav">
-              <li>
-                <Link className="nav-link" to="/login">
-                  {t("Login")}
-                </Link>
-              </li>
-              <li>
-                <Link className="nav-link" to="/signUp">
-                  {t("Sign Up")}
-                </Link>
-              </li>
-            </ul>
+            {links}
           </div>
         </nav>
       </div>
