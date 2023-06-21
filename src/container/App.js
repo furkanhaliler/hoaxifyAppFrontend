@@ -13,38 +13,17 @@ import {
   Switch,
 } from "react-router-dom/cjs/react-router-dom.min";
 import TopBar from "../components/TopBar";
+import { Authentication } from "../shared/AuthenticationContext";
 
 class App extends React.Component {
-  state = {
-    isLoggedIn: false,
-    username: undefined,
-  };
-
-  onLoginSuccess = (username) => {
-    this.setState({
-      username: username,
-      isLoggedIn: true,
-    });
-  };
-
-  onLogoutSuccess = () => {
-    this.setState({
-      isLoggedIn: false,
-      username: undefined,
-    });
-  };
-
+  static contextType = Authentication;
   render() {
-    const { isLoggedIn, username } = this.state;
+    const { isLoggedIn, username } = this.context.state;
 
     return (
       <div>
         <Router>
-          <TopBar
-            isLoggedIn={isLoggedIn}
-            username={username}
-            onLogoutSuccess={this.onLogoutSuccess}
-          ></TopBar>
+          <TopBar></TopBar>
           <Switch>
             {!isLoggedIn && (
               <Route exact path="/" component={HomePageLoggedOut}></Route>
@@ -52,29 +31,12 @@ class App extends React.Component {
             {isLoggedIn && (
               <Route exact path="/home" component={HomePageLoggedIn}></Route>
             )}
-            {!isLoggedIn && (
-              <Route
-                path="/login"
-                component={(props) => {
-                  return (
-                    <LoginPage
-                      {...props}
-                      onLoginSuccess={this.onLoginSuccess}
-                    ></LoginPage>
-                  );
-                }}
-              ></Route>
-            )}
+            {!isLoggedIn && <Route path="/login" component={LoginPage}></Route>}
             {!isLoggedIn && (
               <Route path="/signup" component={UserSignupPage}></Route>
             )}
             {isLoggedIn && (
-              <Route
-                path="/user/:username"
-                component={(props) => {
-                  return <UserPage {...props} username={username}></UserPage>;
-                }}
-              ></Route>
+              <Route path="/user/:username" component={UserPage}></Route>
             )}
             <Redirect to={isLoggedIn ? "/home" : "/"}></Redirect>
           </Switch>
