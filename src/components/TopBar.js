@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import logo from "../assets/hoaxify.png";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { withTranslation } from "react-i18next";
-import { Authentication } from "../shared/AuthenticationContext";
+// import { Authentication } from "../shared/AuthenticationContext";
 
 class TopBar extends Component {
-  static contextType = Authentication;
+  // static contextType = Authentication;
   render() {
     const { t } = this.props;
 
-    const { state, onLogoutSuccess } = this.context;
-    const { username, isLoggedIn } = state;
+    const onLogoutSuccess = () => {};
+    const username = undefined;
+    const isLoggedIn = false;
     let links = (
       <ul className="navbar-nav">
         <li>
