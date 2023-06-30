@@ -3,15 +3,14 @@ import logo from "../assets/hoaxify.png";
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { withTranslation } from "react-i18next";
 // import { Authentication } from "../shared/AuthenticationContext";
+import { connect } from "react-redux";
+import { logoutSuccess } from "../redux/AuthActions";
 
 class TopBar extends Component {
   // static contextType = Authentication;
-  render() {
-    const { t } = this.props;
 
-    const onLogoutSuccess = () => {};
-    const username = undefined;
-    const isLoggedIn = false;
+  render() {
+    const { t, isLoggedIn, username, onLogoutSuccess } = this.props;
     let links = (
       <ul className="navbar-nav">
         <li>
@@ -57,4 +56,24 @@ class TopBar extends Component {
   }
 }
 
-export default withTranslation()(TopBar);
+const TopBarWithTranslation = withTranslation()(TopBar);
+
+const mapStateToProps = (store) => {
+  return {
+    isLoggedIn: store.isLoggedIn,
+    username: store.username,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogoutSuccess: () => {
+      return dispatch(logoutSuccess());
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TopBarWithTranslation);

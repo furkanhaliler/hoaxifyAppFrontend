@@ -6,11 +6,15 @@ import reportWebVitals from "./reportWebVitals";
 import "./bootstrap-override.scss";
 import "./i18n";
 // import AuthenticationContext from "./shared/AuthenticationContext";
+import { Provider } from "react-redux";
+import configureStore from "./redux/ConfigureStore";
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const store = configureStore();
 root.render(
-  // <AuthenticationContext>
-  <App></App>
-  // </AuthenticationContext>
+  <Provider store={store}>
+    <App></App>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
