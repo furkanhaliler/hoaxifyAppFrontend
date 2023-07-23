@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { signUp } from "../api/apiCalls";
 import Input from "../components/Input";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import { withApiProgress } from "../shared/ApiProgress";
 import { connect } from "react-redux";
@@ -32,8 +32,9 @@ const UserSignUpPage = (props) => {
     setForm(formCopy);
   };
 
+  const { t } = useTranslation();
+
   const checkPasswordsMatch = (name, value) => {
-    const { t } = props;
     if (
       value === "" &&
       (form.password === null || form.passwordRepeat === null)
@@ -79,7 +80,7 @@ const UserSignUpPage = (props) => {
     password: passwordError,
     passwordRepeat: passwordRepeatError,
   } = errors;
-  const { t, pendingApiCall } = props;
+  const { pendingApiCall } = props;
   return (
     <div className="container">
       <form>
@@ -133,8 +134,4 @@ const UserSignUpPageWithApiProgressForAuthRequest = withApiProgress(
   "/auth"
 );
 
-const UserSignUpPageWithTranslation = withTranslation()(
-  UserSignUpPageWithApiProgressForAuthRequest
-);
-
-export default connect()(UserSignUpPageWithTranslation);
+export default connect()(UserSignUpPageWithApiProgressForAuthRequest);

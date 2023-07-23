@@ -33,7 +33,7 @@ export const loginHandler = (credentials) => {
 export const signUpHandler = (user) => {
   return async function (dispatch) {
     const loginRequest = {
-      username: user.userName,
+      username: user.username,
       password: user.password,
     };
     const response = await signUp(user);
