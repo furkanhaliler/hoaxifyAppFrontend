@@ -19,7 +19,7 @@ export const loginHandler = (credentials) => {
     const response = await login(credentials);
 
     const authState = {
-      username: response.data.data.userName,
+      username: response.data.data.username,
       displayName: response.data.data.displayName,
       password: credentials.password,
       image: undefined,

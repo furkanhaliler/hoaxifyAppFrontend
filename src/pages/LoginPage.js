@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import ButtonWithProgress from "../components/ButtonWithProgress";
 import { withApiProgress } from "../shared/ApiProgress";
 import { loginHandler } from "../redux/AuthActions";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const LoginPage = (props) => {
   const [username, setUsername] = useState();
@@ -15,6 +15,8 @@ const LoginPage = (props) => {
     setError(undefined);
   }, [username, password]);
 
+  const dispatch = useDispatch();
+
   const onClickLogin = async (event) => {
     event.preventDefault();
     const creds = {
@@ -22,7 +24,7 @@ const LoginPage = (props) => {
       password,
     };
     setError(undefined);
-    const { history, dispatch } = props;
+    const { history } = props;
     const { push } = history;
     try {
       await dispatch(loginHandler(creds));
@@ -66,4 +68,4 @@ const LoginPage = (props) => {
   );
 };
 
-export default connect()(withApiProgress(LoginPage, "/auth"));
+export default withApiProgress(LoginPage, "/auth");
