@@ -11,3 +11,7 @@ export const changeLanguage = (language) => {
 export const login = (creds) => {
   return axios.post("/auth", {}, { auth: creds });
 };
+
+export const getAllUsers = () => {
+  return axios.get("/users/getAll");
+};
